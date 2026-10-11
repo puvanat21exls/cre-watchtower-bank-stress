@@ -1,0 +1,268 @@
+=== BACKTEST: DID THE TAGS FORESEE LATER BAD-LOAN GROWTH? ===
+Question: do banks tagged BURNING or IGNITING see bigger rises in their CRE nonaccrual rate over the next h quarters than other banks in the same >= 250% cohort, and do the tags beat the plain 300% concentration rule?
+Outcome: nonaccrual rate h quarters later minus at the as-of quarter (bp). A missing or null quarter gives a null outcome, counted and excluded, never read as zero.
+Tags use only data up to each as-of quarter (current rules). Interval: 95% bootstrap of the median difference, resampling whole banks (2000 resamples, seed 20260926).
+LIMITS: names are today's KRE constituents only (survivorship: banks that failed or left KRE earlier are absent); banks.csv holds today's FDIC figures incl. later call-report amendments; overlapping quarters of one bank are not independent; one stress episode.
+N KRE names in banks.csv: 167
+
+======================================================================
+=== HORIZON 4 QUARTERS ===
+As-of quarters: 20220331..20250630 (N 14; first = first full 13-quarter window, last = latest with 4 later quarters)
+N cohort observations: 993 | with outcome: 993 | null outcome: 0 | distinct banks: 90
+
+--- OUTCOME BY TAG (pooled over as-of quarters) ---
+  group                   N obs  banks  median bp   mean bp   rising
+  BURNING                   283     58       -7.5      -2.7      39%
+  IGNITING                    9      6       +1.8     +14.4      89%
+  SMOLDERING                217     50       +6.9     +26.7      61%
+  QUIET                     484     74       +7.1     +22.1      74%
+  NO-DATA                     0      0       NULL      NULL     NULL
+  cohort, all tags          993     90       +3.9     +16.0      61%
+
+--- TESTS ---
+
+  1. Tags, >= 250% cohort: BURNING+IGNITING vs SMOLDERING+QUIET (NO-DATA excluded: 0 obs)
+    N flagged 292 obs / 60 banks | N rest 701 obs / 86 banks
+    median difference -13.4 bp, 95% interval [-22.6, -6.8] (2000/2000 resamples usable) -> flagged banks deteriorated LESS (interval below 0)
+
+  2. 300% rule, same cohort: > 300% vs 250-300%
+    N flagged 487 obs / 53 banks | N rest 506 obs / 68 banks
+    median difference +3.5 bp, 95% interval [-1.5, +8.4] (2000/2000 resamples usable) -> NO CLEAR DIFFERENCE (interval includes 0)
+
+  3. 300% rule, all names: > 300% vs <= 300%
+    N flagged 487 obs / 53 banks | N rest 1783 obs / 143 banks
+    median difference +5.3 bp, 95% interval [+0.8, +10.3] (2000/2000 resamples usable) -> flagged banks deteriorated MORE (interval above 0)
+
+--- PER AS-OF QUARTER (median change, bp) ---
+      as-of  -> later  cohort null out  flagged  med flag  med rest
+   20220331  20230331      62        0       18     -15.8      +0.4
+   20220630  20230630      68        0       15      -8.4      +0.7
+   20220930  20230930      66        0       14      +0.5      +6.8
+   20221231  20231231      72        0       12      -0.1      +9.9
+   20230331  20240331      74        0       13      +3.4      +8.7
+   20230630  20240630      75        0       16      -5.3      +9.5
+   20230930  20240930      73        0       20      -7.5     +11.3
+   20231231  20241231      72        0       21     -15.7      +3.0
+   20240331  20250331      71        0       24      +8.3      +1.9
+   20240630  20250630      73        0       23     +19.3      +7.9
+   20240930  20250930      72        0       26     -14.1      +6.5
+   20241231  20251231      69        0       29     -20.2     +15.4
+   20250331  20260331      73        0       32      -1.7     +12.3
+   20250630  20260630      73        0       29     -11.3     +11.8
+  names with no row at the as-of quarter (not yet in the data then), range over quarters: 0..0
+
+--- SECOND OUTCOME: CRE NET CHARGE-OFFS OVER THE NEXT 4 QUARTERS (bp of CRE loans at the as-of quarter) ---
+N cohort observations: 993 | with charge-off outcome: 993 | null (a missing quarter or zero CRE loans): 0
+  group                   N obs  banks  median bp   mean bp  any NCO
+  BURNING                   283     58       +7.7     +23.4      82%
+  IGNITING                    9      6       +0.4      +2.3     100%
+  SMOLDERING                217     50       +2.3      +5.8      71%
+  QUIET                     484     74       +0.4      +4.1      61%
+  NO-DATA                     0      0       NULL      NULL     NULL
+  cohort, all tags          993     90       +2.0     +10.0      69%
+
+  1. Tags: BURNING+IGNITING vs SMOLDERING+QUIET
+    N flagged 292 obs / 60 banks | N rest 701 obs / 86 banks
+    median difference +6.7 bp, 95% interval [+3.5, +9.5] (2000/2000 resamples usable) -> flagged banks deteriorated MORE (interval above 0)
+
+  2. 300% rule, same cohort: > 300% vs 250-300%
+    N flagged 487 obs / 53 banks | N rest 506 obs / 68 banks
+    median difference +0.8 bp, 95% interval [-1.1, +3.2] (2000/2000 resamples usable) -> NO CLEAR DIFFERENCE (interval includes 0)
+
+  3. 300% rule, all names: > 300% vs <= 300%
+    N flagged 487 obs / 53 banks | N rest 1784 obs / 143 banks
+    median difference +0.9 bp, 95% interval [-1.0, +3.6] (2000/2000 resamples usable) -> NO CLEAR DIFFERENCE (interval includes 0)
+
+======================================================================
+=== HORIZON 8 QUARTERS ===
+As-of quarters: 20220331..20240630 (N 10; first = first full 13-quarter window, last = latest with 8 later quarters)
+N cohort observations: 706 | with outcome: 705 | null outcome: 1 | distinct banks: 83
+
+--- OUTCOME BY TAG (pooled over as-of quarters) ---
+  group                   N obs  banks  median bp   mean bp   rising
+  BURNING                   167     43       +2.4      +5.5      50%
+  IGNITING                    9      6      +23.0     +32.0     100%
+  SMOLDERING                187     49      +14.2     +41.9      65%
+  QUIET                     342     65      +19.7     +43.5      83%
+  NO-DATA                     0      0       NULL      NULL     NULL
+  cohort, all tags          705     83      +16.2     +33.9      71%
+
+--- TESTS ---
+
+  1. Tags, >= 250% cohort: BURNING+IGNITING vs SMOLDERING+QUIET (NO-DATA excluded: 0 obs)
+    N flagged 176 obs / 48 banks | N rest 529 obs / 78 banks
+    median difference -11.7 bp, 95% interval [-32.9, +3.9] (2000/2000 resamples usable) -> NO CLEAR DIFFERENCE (interval includes 0)
+
+  2. 300% rule, same cohort: > 300% vs 250-300%
+    N flagged 343 obs / 50 banks | N rest 362 obs / 59 banks
+    median difference +5.8 bp, 95% interval [-3.3, +19.6] (2000/2000 resamples usable) -> NO CLEAR DIFFERENCE (interval includes 0)
+
+  3. 300% rule, all names: > 300% vs <= 300%
+    N flagged 343 obs / 50 banks | N rest 1275 obs / 141 banks
+    median difference +10.4 bp, 95% interval [+3.3, +22.4] (2000/2000 resamples usable) -> flagged banks deteriorated MORE (interval above 0)
+
+--- PER AS-OF QUARTER (median change, bp) ---
+      as-of  -> later  cohort null out  flagged  med flag  med rest
+   20220331  20240331      62        0       18      -8.9     +10.7
+   20220630  20240630      68        0       15     +13.0     +14.2
+   20220930  20240930      66        0       14     +22.7     +15.0
+   20221231  20241231      72        0       12     +22.9     +13.3
+   20230331  20250331      74        0       13      -7.8     +20.5
+   20230630  20250630      75        0       16     -14.6     +20.0
+   20230930  20250930      73        0       20     -21.2     +31.7
+   20231231  20251231      72        0       21     -22.8     +23.8
+   20240331  20260331      71        0       24     +17.6     +18.9
+   20240630  20260630      73        1       23     +15.2     +20.1
+  names with no row at the as-of quarter (not yet in the data then), range over quarters: 0..0
+
+--- SECOND OUTCOME: CRE NET CHARGE-OFFS OVER THE NEXT 8 QUARTERS (bp of CRE loans at the as-of quarter) ---
+N cohort observations: 706 | with charge-off outcome: 706 | null (a missing quarter or zero CRE loans): 0
+  group                   N obs  banks  median bp   mean bp  any NCO
+  BURNING                   167     43      +15.5     +37.7      92%
+  IGNITING                    9      6       +7.4      +7.2     100%
+  SMOLDERING                188     49       +7.5     +19.8      86%
+  QUIET                     342     65       +3.4     +11.3      75%
+  NO-DATA                     0      0       NULL      NULL     NULL
+  cohort, all tags          706     83       +6.1     +19.8      82%
+
+  1. Tags: BURNING+IGNITING vs SMOLDERING+QUIET
+    N flagged 176 obs / 48 banks | N rest 530 obs / 78 banks
+    median difference +9.3 bp, 95% interval [+2.8, +19.8] (2000/2000 resamples usable) -> flagged banks deteriorated MORE (interval above 0)
+
+  2. 300% rule, same cohort: > 300% vs 250-300%
+    N flagged 343 obs / 50 banks | N rest 363 obs / 59 banks
+    median difference +3.6 bp, 95% interval [-1.4, +10.6] (2000/2000 resamples usable) -> NO CLEAR DIFFERENCE (interval includes 0)
+
+  3. 300% rule, all names: > 300% vs <= 300%
+    N flagged 343 obs / 50 banks | N rest 1276 obs / 141 banks
+    median difference +2.9 bp, 95% interval [-2.0, +10.5] (2000/2000 resamples usable) -> NO CLEAR DIFFERENCE (interval includes 0)
+
+======================================================================
+=== FAILED BANKS (FDIC failures, data/backtest_banks.csv) ===
+Each failed bank's last 4 filings before failure, tagged as if it had been on the list (added to that quarter's cohort). Tags need the survivors' full 13-quarter window, so quarters before 20220331 show n/a.
+
+  ERICSON STATE BANK (failed 20200214; 4 filings from 20190331)
+        as-of  refined%  incl_oo%     NA%  tag / reason
+     20190331      44.9      44.9   51.76  n/a (before 20220331 window)
+     20190630      44.3      44.3   51.89  n/a (before 20220331 window)
+     20190930      38.4      38.4   49.49  n/a (before 20220331 window)
+     20191231      68.5      68.5   41.74  n/a (before 20220331 window)
+
+  THE FIRST STATE BANK (failed 20200403; 5 filings from 20190331)
+        as-of  refined%  incl_oo%     NA%  tag / reason
+     20190630     260.2     571.1    7.70  n/a (before 20220331 window)
+     20190930     271.5     600.8    6.26  n/a (before 20220331 window)
+     20191231     382.0     839.0    9.39  n/a (before 20220331 window)
+     20200331     616.0    1419.3    9.88  n/a (before 20220331 window)
+
+  FIRST CITY BANK OF FLORIDA (failed 20201016; 7 filings from 20190331)
+        as-of  refined%  incl_oo%     NA%  tag / reason
+     20191231     722.4    1001.9   10.36  n/a (before 20220331 window)
+     20200331     686.5     935.4    4.43  n/a (before 20220331 window)
+     20200630     746.8    1014.6    4.55  n/a (before 20220331 window)
+     20200930     889.1    1217.1    2.63  n/a (before 20220331 window)
+
+  ALMENA STATE BANK (failed 20201023; 7 filings from 20190331)
+        as-of  refined%  incl_oo%     NA%  tag / reason
+     20191231     255.2     255.2    0.02  n/a (before 20220331 window)
+     20200331     256.1     256.1    0.00  n/a (before 20220331 window)
+     20200630     655.9     655.9    0.00  n/a (before 20220331 window)
+     20200930    1432.3    1432.3    0.00  n/a (before 20220331 window)
+
+  SILICON VALLEY BANK (failed 20230310; 16 filings from 20190331)
+        as-of  refined%  incl_oo%     NA%  tag / reason
+     20220331      15.8      18.0    0.18  not in cohort (< 250%)
+     20220630      14.5      16.8    0.35  not in cohort (< 250%)
+     20220930      13.2      15.6    0.18  not in cohort (< 250%)
+     20221231      13.4      15.7    0.18  not in cohort (< 250%)
+
+  SIGNATURE BANK (failed 20230312; 16 filings from 20190331)
+        as-of  refined%  incl_oo%     NA%  tag / reason
+     20220331     281.9     295.8    0.52  BURNING
+     20220630     286.8     301.5    0.45  BURNING
+     20220930     296.5     314.0    0.48  BURNING
+     20221231     299.5     318.4    0.48  BURNING
+
+  FIRST REPUBLIC BANK (failed 20230501; 17 filings from 20190331)
+        as-of  refined%  incl_oo%     NA%  tag / reason
+     20220630     169.7     176.7    0.04  not in cohort (< 250%)
+     20220930     178.3     185.8    0.03  not in cohort (< 250%)
+     20221231     186.1     193.8    0.00  not in cohort (< 250%)
+     20230331     190.2     197.8    0.04  not in cohort (< 250%)
+
+  HEARTLAND TRI-STATE BANK (failed 20230728; 17 filings from 20190331)
+        as-of  refined%  incl_oo%     NA%  tag / reason
+     20220630       3.1      18.5    0.00  not in cohort (< 250%)
+     20220930       3.1      18.3    0.00  not in cohort (< 250%)
+     20221231       4.1      18.2    0.00  not in cohort (< 250%)
+     20230331       4.0      17.7    0.00  not in cohort (< 250%)
+
+  CITIZENS BANK (failed 20231103; 19 filings from 20190331)
+        as-of  refined%  incl_oo%     NA%  tag / reason
+     20221231       0.6       1.1    0.00  not in cohort (< 250%)
+     20230331       0.5       1.0    0.00  not in cohort (< 250%)
+     20230630       0.5       0.9    0.00  not in cohort (< 250%)
+     20230930       4.0       7.5    0.00  not in cohort (< 250%)
+
+  REPUBLIC BANK (failed 20240426; 20 filings from 20190331)
+        as-of  refined%  incl_oo%     NA%  tag / reason
+     20230331     311.7     482.9    0.78  BURNING
+     20230630     333.1     501.1    0.75  BURNING
+     20230930     318.3     490.3    0.80  BURNING
+     20231231     333.9     513.1    1.06  BURNING
+
+  FIRST NB OF LINDSAY (failed 20241018; 23 filings from 20190331)
+        as-of  refined%  incl_oo%     NA%  tag / reason
+     20231231      NULL      NULL    0.00  NULL refined (no RBC)
+     20240331      NULL      NULL    0.00  NULL refined (no RBC)
+     20240630      NULL      NULL    0.00  NULL refined (no RBC)
+     20240930      NULL      NULL    0.00  NULL refined (no RBC)
+
+  PULASKI SAVINGS BANK (failed 20250117; 23 filings from 20190331)
+        as-of  refined%  incl_oo%     NA%  tag / reason
+     20231231      99.0      99.0    0.00  not in cohort (< 250%)
+     20240331      96.3      96.3    0.00  not in cohort (< 250%)
+     20240630      86.0      86.0    4.64  not in cohort (< 250%)
+     20240930      81.4      81.4    0.00  not in cohort (< 250%)
+
+  SANTA ANNA NATIONAL BANK (failed 20250627; 25 filings from 20190331)
+        as-of  refined%  incl_oo%     NA%  tag / reason
+     20240630      NULL      NULL    0.00  NULL refined (no RBC)
+     20240930      NULL      NULL    0.00  NULL refined (no RBC)
+     20241231      NULL      NULL    0.00  NULL refined (no RBC)
+     20250331      NULL      NULL    0.00  NULL refined (no RBC)
+
+  METROPOLITAN CAPITAL B&T (failed 20260130; 28 filings from 20190331)
+        as-of  refined%  incl_oo%     NA%  tag / reason
+     20250331      72.7      73.7    1.35  not in cohort (< 250%)
+     20250630     126.3     127.3    0.76  not in cohort (< 250%)
+     20250930     124.8     125.8    0.79  not in cohort (< 250%)
+     20251231     300.2     302.3    0.70  SMOLDERING
+
+  COMMUNITY BANK AND TRUST - WEST GEORGIA (failed 20260501; 29 filings from 20190331)
+        as-of  refined%  incl_oo%     NA%  tag / reason
+     20250630     287.2     639.6   25.47  BURNING
+     20250930     175.8     461.9   15.97  not in cohort (< 250%)
+     20251231     117.2     387.3   17.39  not in cohort (< 250%)
+     20260331     710.3    2305.1   13.13  BURNING
+
+  KENTLAND FS&LA (failed 20260710; 29 filings from 20190331)
+        as-of  refined%  incl_oo%     NA%  tag / reason
+     20250630      39.2      63.7    0.00  not in cohort (< 250%)
+     20250930      75.3     119.8    0.00  not in cohort (< 250%)
+     20251231      90.4     142.2    0.00  not in cohort (< 250%)
+     20260331     137.5     213.6    0.00  not in cohort (< 250%)
+
+  SMALL BUSINESS BANK (failed 20260717; 29 filings from 20190331)
+        as-of  refined%  incl_oo%     NA%  tag / reason
+     20250630      46.4     235.6    4.34  not in cohort (< 250%)
+     20250930     115.7     302.6    9.03  not in cohort (< 250%)
+     20251231     151.7     402.5   11.64  not in cohort (< 250%)
+     20260331     113.3     491.9   11.41  not in cohort (< 250%)
+
+--- FAILED-BANK SUMMARY ---
+  N failed banks in file: 17 | N testable (a last-4 filing in the window with non-null refined): 11
+  flagged BURNING/IGNITING in a last-4 filing: 3 ['SIGNATURE BANK', 'REPUBLIC BANK', 'COMMUNITY BANK AND TRUST - WEST GEORGIA']
+  above 300% refined in a last-4 filing:      3 ['REPUBLIC BANK', 'METROPOLITAN CAPITAL B&T', 'COMMUNITY BANK AND TRUST - WEST GEORGIA']
+  testable but caught by neither:             7 ['SILICON VALLEY BANK', 'FIRST REPUBLIC BANK', 'HEARTLAND TRI-STATE BANK', 'CITIZENS BANK', 'PULASKI SAVINGS BANK', 'KENTLAND FS&LA', 'SMALL BUSINESS BANK']
+  (counts above use filings from 20220331 on; before that, above 300% but untestable for tags: 3 ['THE FIRST STATE BANK', 'FIRST CITY BANK OF FLORIDA', 'ALMENA STATE BANK'])

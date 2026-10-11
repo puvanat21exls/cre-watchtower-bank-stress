@@ -1,0 +1,44 @@
+### Run Date: 2026-10-10 15:59:23
+================ STATUS DASHBOARD ================
+
+--- BANKS (20260630) ---
+N KRE names: 165 (3 null refined_conc, kept null)
+>300% refined: 33 | watch 250-300%: 40
+Top 10 by refined concentration (incl_oo alongside):
+  FIVE STAR BANCORP                    | refined  536.4% | incl_oo  639.8%
+  HINGHAM INSTITUTION FOR SVGS         | refined  524.8% | incl_oo  552.1%
+  KEARNY FINANCIAL CORP/MD             | refined  513.9% | incl_oo  526.9%
+  NORTHEAST BANK                       | refined  464.3% | incl_oo  504.6%
+  CONNECTONE BANCORP INC               | refined  438.7% | incl_oo  545.4%
+  GREAT SOUTHERN BANCORP INC           | refined  437.8% | incl_oo  462.2%
+  PROVIDENT FINANCIAL SERVICES         | refined  421.8% | incl_oo  525.7%
+  PEAPACK GLADSTONE FINL CORP          | refined  405.9% | incl_oo  444.2%
+  CARTER BANKSHARES INC                | refined  395.0% | incl_oo  422.7%
+  OCEANFIRST FINANCIAL CORP            | refined  384.2% | incl_oo  455.9%
+
+--- SLOPES (nonaccrual trend, cohort >=250% refined) ---
+BURNING (taking losses now): 29 | IGNITING (bad loans starting to rise): 1 | top 3: BANC OF CALIFORNIA INC, PREFERRED BANK/LOS ANGELES, SHORE BANCSHARES INC
+Cohort median nonaccrual 20260331 -> 20260630: 0.599% -> 0.565% (-3.3 bp, N paired 73/73; band +/-5 bp)
+
+--- VOLATILITY (2026-10-09, source=run) ---
+History: 444 rows from 2025-01-02 (380 backfill, 25 run, 39 gapfill); percentiles need 60 prior rows
+KRE 30d Vol Pctile: 12.4% -> CHEAP
+VIX Pctile:         6.8% -> CHEAP
+
+--- TREPP / EXTEND & PRETEND (2026-08, N=12 months from 2025-09, 12 backfill) ---
+Delinquency 7.85% | office 12.00% | special servicing 11.42%
+Workout gap (special servicing - delinquency): 3.57 pp | MoM +0.34 pp
+Trend (last 3-month avg vs previous 3: 3.55 vs 3.53 pp, band +/-0.20 pp): STABLE
+
+--- BONDS (2026-10-08, source=run) ---
+10Y 5.22% (+0.66 3m) | 5Y 4.99% (+0.68 3m) | 2Y 4.75% (+0.54 3m)
+2s10s: +0.47 pp | coupon gap vs 2021 avg 1.45%: +3.77 pp
+OAS  BBB 1.02% (+0.08 3m) | HY 3.15% (+0.45 3m)
+Signal: RATE_SHOCK  (RATE_SHOCK: 10Y 3m chg >= +0.50; CREDIT_STRESS: HY 3m chg >= +1.00)
+
+--- OVERALL SIGNALS ---
+BANKS : STABLE
+VOL   : COMPLACENT
+TREPP : STABLE
+BONDS : RATE_SHOCK
+==================================================
