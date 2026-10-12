@@ -17,6 +17,10 @@ With cheap 2021-vintage CRE loans maturing into the 2026–2027 "maturity wall" 
 * **The Persistent Grind (0.15% $\rightarrow$ 0.57%):** For the 73 flagged banks, the median nonaccrual rate rose from 0.15% in 2023Q2 to 0.57% in 2026Q2, a steady grind rather than a cliff. It eased slightly in the latest quarter (0.60% $\rightarrow$ 0.57%). This pattern is *consistent with* loan extension activity ("extend & pretend") spreading recognition over time; the data here do not prove that mechanism.
 * **The Flags Foresee Losses (backtest):** Banks tagged BURNING or IGNITING went on to record **higher CRE net charge-offs** than other concentrated banks: **+6.7 bp** over the next 4 quarters (95% interval 3.5 to 9.5) and **+9.3 bp** over 8 quarters (2.8 to 19.8). Details below.
 
+![Median CRE nonaccrual rate of the 73 concentrated banks, 2019Q1 to 2026Q2](results/chart_bad_loans_2026Q2.png)
+
+A one-page summary of the project is in `results/cre_watchtower_summary_2026Q2.pdf`.
+
 ---
 
 ## 🔬 Methodology & Formula Definitions
@@ -77,6 +81,8 @@ Any signal reports **INSUFFICIENT DATA** instead of guessing when its inputs are
 | $>300\%$ vs. $\le 300\%$, all banks | Change in nonaccrual rate (bp) | +5.3 [0.8, 10.3] | +10.4 [3.3, 22.4] |
 | $>300\%$ vs. $\le 300\%$, all banks | CRE net charge-offs (bp) | +0.9 [−1.0, 3.6] | +2.9 [−2.0, 10.5] |
 
+![Median CRE net charge-offs after the flag date, flagged banks versus other concentrated banks](results/chart_backtest_2026Q2.png)
+
 **Reading it:** flagged banks' bad-loan share stops rising while their write-offs run higher. The tag marks banks in the *loss-taking phase*: the damage is being booked, not still building. The plain 300% rule points to banks whose bad loans grow more, but it does not separate who takes losses.
 
 **Failed banks:** of 17 FDIC failures since 2020, 11 are testable. The tags flagged **3** in their last filings before failure (Signature Bank, Republic Bank, Community Bank & Trust – West Georgia). Silicon Valley Bank and First Republic were **not** flagged, as expected: they failed from deposit runs and interest-rate losses, not CRE.
@@ -120,6 +126,9 @@ Data-integrity rules built into the code: every FDIC and FRED field code is veri
 
 ```text
 ├── results/
+│   ├── cre_watchtower_summary_2026Q2.pdf    # One-page summary with both charts
+│   ├── chart_bad_loans_2026Q2.png           # Median nonaccrual rate of the 73 concentrated banks, 2019Q1–2026Q2
+│   ├── chart_backtest_2026Q2.png            # Backtest: later charge-offs, flagged banks vs. the rest
 │   ├── cre_watchtower_research_writeup.md   # Research write-up (July 2026) with October 2026 addendum
 │   ├── watchlist_2026Q2.csv                 # All 73 flagged banks: concentration, nonaccrual, slope, tag
 │   ├── backtest_2026Q2.txt                  # Full backtest output, including the failed-bank check
